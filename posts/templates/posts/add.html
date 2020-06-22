@@ -1,0 +1,35 @@
+{% extends "mainApp/layout.html" %}
+
+{% block content %}
+<div class="d-flex align-items-center text-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <form method="post" class="col-md-6" enctype="multipart/form-data">
+                <div  class="form-group">
+                    <h1>Adding post</h1>
+                </div>
+                {% csrf_token %}
+                {% for field in form %}
+                {% if field.label != 'File' %}
+                <div class="form-group">
+                    <label class="font-weight-bold">{{field.label}}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <span class="text-danger">{{field.errors}}</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% endfor %}
+                <div class="custom-file form-group">
+                    {{ form.file }}
+                    <label class="custom-file-label font-weight-bold">Select file</label>
+                </div>
+                {% if form.file.errors %}
+                <span class="text-danger">{{form.errors.file}}</span>
+                {% endif %}
+                <button type="submit" class="btn btn-primary mt-3 w-100">Add</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

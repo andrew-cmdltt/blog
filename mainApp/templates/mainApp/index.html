@@ -1,0 +1,36 @@
+{% extends "mainApp/layout.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center m-3">
+        <div class="col-6">
+            <form action="{% url 'search' %}">
+                <input type="text" name="title" required="" class="form-control" placeholder="Enter the name of the post to search and press Enter">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        {% if not posts %}
+        <h1>Posts not found</h1>
+        {% else %}
+        {% for post in posts %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                {% load static %}
+                <img src="{% static '/media/'%}{{post.img_path}}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{post.title}}
+                    </h5>
+                    <a href="{% url 'post' post.id %}" class="btn btn-primary">More details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}
+
